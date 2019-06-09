@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 )
-import . "sort"
 
 func main() {
 	var a = []int{13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7}
@@ -51,9 +50,4 @@ func maxCrossingSubArray(a []int, low int, mid int, high int) (int, int, int) {
 		}
 	}
 	return maxLeft, maxRight, leftSum + rightSum
-}
-
-func MaxIntSlice(v []int) int {
-	Ints(v)
-	return v[len(v)-1]
 }
