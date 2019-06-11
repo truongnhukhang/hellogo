@@ -6,12 +6,8 @@ import (
 )
 
 func main() {
-	var a = []int{16, 4, 10, 14, 7, 9, 3, 2, 8, 1}
-	//maxHeapBuild(a,1);
-	//for i:=0;i<len(a);i++ {
-	//	fmt.Print(strconv.Itoa(a[i]) + " ");
-	//}
-	sortInplace(a)
+	var a = []int{16, 4, 10, 14, 7, 9, 3, 2, 8, 1, 18}
+	toMaxHeap(a)
 	for i := 0; i < len(a); i++ {
 		fmt.Print(strconv.Itoa(a[i]) + " ")
 	}
