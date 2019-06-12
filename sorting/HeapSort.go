@@ -9,7 +9,7 @@ import (
 func main() {
 	var a = []int{16, 4, 10, 14, 7, 9, 3, 2, 8, 1, 18}
 	//sort(a);
-	ToMaxHeap(a)
+	ToMinHeap(a)
 	for i := 0; i < len(a); i++ {
 		fmt.Print(strconv.Itoa(a[i]) + " ")
 	}
