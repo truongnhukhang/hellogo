@@ -13,6 +13,12 @@ func main() {
 	}
 }
 
+/**
+merge K Sorted List
+Example :
+input = {1, 3, 9}, {2, 6, 10}, {4, 7, 8}, {5, 9, 11}
+output = {1,2,3,4,5,6,7,8,9,9,10,11}
+**/
 func mergeKSortedList(a [][]int) []int {
 	tempHeap := make([]int, 0)
 	priorityQueue := MinPriorityQueue{tempHeap}
