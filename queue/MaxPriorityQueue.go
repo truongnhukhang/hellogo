@@ -6,18 +6,18 @@ import (
 	"strconv"
 )
 
-type PriorityQueue struct {
+type MaxPriorityQueue struct {
 	DB []int
 }
 
-func (q *PriorityQueue) Put(e int) {
+func (q *MaxPriorityQueue) Put(e int) {
 	q.DB = append(q.DB, e)
 	if len(q.DB) > 1 {
 		ToMaxHeap(q.DB)
 	}
 }
 
-func (q *PriorityQueue) Poll() interface{} {
+func (q *MaxPriorityQueue) Poll() interface{} {
 	var e = q.DB[0]
 	q.DB = append(q.DB[:0], q.DB[1:]...)
 	if len(q.DB) > 1 {
@@ -26,12 +26,12 @@ func (q *PriorityQueue) Poll() interface{} {
 	return e
 }
 
-func (q *PriorityQueue) Max() interface{} {
+func (q *MaxPriorityQueue) Max() interface{} {
 	var e = q.DB[0]
 	return e
 }
 
-func (q *PriorityQueue) IncreaseKey(index int, value int) {
+func (q *MaxPriorityQueue) IncreaseKey(index int, value int) {
 	q.DB[index-1] = value
 	parent := index / 2
 	for parent != 0 {
@@ -44,7 +44,7 @@ func (q *PriorityQueue) IncreaseKey(index int, value int) {
 
 }
 
-func (q *PriorityQueue) Print() {
+func (q *MaxPriorityQueue) Print() {
 	for i := 0; i < len(q.DB); i++ {
 		fmt.Print(strconv.Itoa(q.DB[i]) + " ")
 	}

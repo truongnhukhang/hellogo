@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	. "github.com/truongnhukhang/hellogo/heap"
+	. "github.com/truongnhukhang/hellogo/queue"
 )
 
 func main() {
@@ -14,20 +14,33 @@ func main() {
 }
 
 func mergeKSortedList(a [][]int) []int {
-	if len(a) == 1 {
-		return a[0]
+	tempHeap := make([]int, 0)
+	priorityQueue := MinPriorityQueue{tempHeap}
+	tempLen := make([]int, len(a))
+	result := make([]int, 0)
+	max := 0
+	for i := 0; i < len(a); i++ {
+		tempLen[i] = len(a[i]) - 1
+		priorityQueue.Put(a[i][0])
+		if max < len(a[i]) {
+			max = len(a[i])
+		}
 	}
-	mid := len(a) / 2
-	aLeft := mergeKSortedList(a[0:mid])
-	aRight := mergeKSortedList(a[mid:len(a)])
-	result := make([]int, len(aLeft)+len(aRight))
-	length := len(aLeft)
-	for i := 0; i < len(aLeft); i++ {
-		result[i] = aLeft[i]
+	count := 1
+	result = append(result, priorityQueue.Poll())
+	for max != 0 {
+		for i := 0; i < len(a); i++ {
+			if tempLen[i] != 0 {
+				priorityQueue.Put(a[i][count])
+				result = append(result, priorityQueue.Poll())
+				tempLen[i]--
+			}
+		}
+		max--
+		count++
 	}
-	for i := 0; i < len(aRight); i++ {
-		InsertToMinHeap(result, aRight[i], length+1)
-		length++
+	for i := 1; i < len(a); i++ {
+		result = append(result, priorityQueue.Poll())
 	}
 	return result
 }
