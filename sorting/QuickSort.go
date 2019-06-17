@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	a := []int{4, 5, 6, 1, 2, 3}
+	a := []int{8, 1, 9, 2, 4, 5, 4, 2, 3, 10, 6, 7}
 	quickSort(a, 0, len(a)-1)
 	for i := range a {
 		fmt.Print(a[i])
@@ -23,13 +23,14 @@ func partition(a []int, start int, end int) int {
 	flag := start
 	for j := start; j < end; j++ {
 		if a[j] < pivotValue {
-			if j != flag {
-				a[flag], a[j] = a[j], a[flag]
-				flag++
-			}
+			a[flag], a[j] = a[j], a[flag]
+			flag++
 		}
 	}
-
-	a[flag], a[end] = a[end], a[flag]
-	return flag
+	if flag != end {
+		a[flag], a[end] = a[end], a[flag]
+		return flag
+	} else {
+		return flag - 1
+	}
 }
