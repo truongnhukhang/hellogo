@@ -15,39 +15,38 @@ func maxSubArray(a []int, low int, high int) (int, int, int) {
 	if low == high {
 		return low, high, a[low]
 	}
-	var mid = (high + low) / 2
-	var leftLow, leftHigh, leftSum = maxSubArray(a, low, mid)
-	var rightLow, rightHigh, rightSum = maxSubArray(a, mid+1, high)
-	var crossLow, crossHigh, crossSum = maxCrossingSubArray(a, low, mid, high)
-	if leftSum >= rightSum && leftSum >= crossSum {
-		return leftLow, leftHigh, leftSum
-	}
-	if rightSum >= leftSum && rightSum >= crossSum {
-		return rightLow, rightHigh, rightSum
+	mid := (low + high) / 2
+	leftLow, leftHigh, sumLeft := maxSubArray(a, low, mid)
+	rightLow, rightHigh, rightSum := maxSubArray(a, mid+1, high)
+	crossLow, crossHigh, crossSum := maxCrossingSubArray(a, leftHigh, mid, rightLow)
+	if sumLeft >= rightSum {
+		if rightSum >= crossSum {
+			return leftLow, leftHigh, sumLeft
+		}
+	} else {
+		if sumLeft >= crossSum {
+			return rightLow, rightHigh, rightSum
+		}
 	}
 	return crossLow, crossHigh, crossSum
 }
 
 func maxCrossingSubArray(a []int, low int, mid int, high int) (int, int, int) {
-	var leftSum = 0
-	var sum = 0
-	var maxLeft = low
+	var lowSum, sum, highSum, crossLow, crossHigh = 0, 0, 0, 0, 0
 	for i := mid; i >= low; i-- {
 		sum = sum + a[i]
-		if sum > leftSum {
-			leftSum = sum
-			maxLeft = i
+		if sum > lowSum || i == mid {
+			lowSum = sum
+			crossLow = i
 		}
 	}
-	var rightSum = 0
 	sum = 0
-	var maxRight = high
-	for j := mid + 1; j <= high; j++ {
-		sum = sum + a[j]
-		if sum > rightSum {
-			rightSum = sum
-			maxRight = j
+	for i := (mid + 1); i <= high; i++ {
+		sum = sum + a[i]
+		if sum > highSum || i == mid+1 {
+			highSum = sum
+			crossHigh = i
 		}
 	}
-	return maxLeft, maxRight, leftSum + rightSum
+	return crossLow, crossHigh, (lowSum + highSum)
 }
