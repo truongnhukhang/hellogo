@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	var a = []int{13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7}
+	var a = []int{13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7, 50}
 	var low, high, sum = maxSubArray(a, 0, len(a)-1)
 	fmt.Println("Position = [" + strconv.Itoa(low) + ";" + strconv.Itoa(high) + "] sum = " + strconv.Itoa(sum))
 	low, high, sum = maxSubArrayBrutalForce(a)
@@ -21,9 +21,9 @@ func maxSubArrayBrutalForce(a []int) (int, int, int) {
 	var toIndex = 0
 	for i := 0; i < len(a)-2; i++ {
 		tempMax := a[i]
-		for j := i + 1; j < len(a)-1; j++ {
+		for j := i + 1; j <= len(a)-1; j++ {
 			tempMax = tempMax + a[j]
-			if max < tempMax {
+			if max <= tempMax {
 				max = tempMax
 				fromIndex = i
 				toIndex = j
@@ -78,23 +78,6 @@ func maxCrossingSubArray(a []int, low int, mid int, high int) (int, int, int) {
 		}
 	}
 	return crossLow, crossHigh, lowSum + highSum
-}
-
-type MaxSub struct {
-	low, high, sum int
-}
-
-func maxSubArrayDynamicProgramingRecursive(a []int, cache map[int]MaxSub) {
-
-}
-func sumArrayByIndex(a []int, cache map[int]MaxSub, index int) MaxSub {
-	if index == 0 {
-		var maxSub = MaxSub{0, 0, a[0]}
-		cache[0] = maxSub
-		return maxSub
-	}
-	var previousSumArray = sumArrayByIndex(a, cache, index-1)
-	//var newSumArray = new MaxSub{previousSumArray.}
 }
 
 func maxSubArrayDynamicPrograming(a []int) (int, int, int) {
