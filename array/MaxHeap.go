@@ -11,28 +11,42 @@ func main() {
 	for i := 0; i < len(a); i++ {
 		fmt.Print(strconv.Itoa(a[i]) + " ")
 	}
+	fmt.Println("")
+	heapSort(a)
+	for i := 0; i < len(a); i++ {
+		fmt.Print(strconv.Itoa(a[i]) + " ")
+	}
+}
+
+func heapSort(a []int) {
+	toMaxHeap(a)
+	length := len(a)
+	for i := 0; i < length; {
+		swap(a, i, length-1)
+		length--
+		maxHeapModify(a, 1, length)
+	}
 }
 
 func toMaxHeap(a []int) {
 	for i := (len(a) / 2); i >= 1; i-- {
-		maxHeapModify(a, i)
+		maxHeapModify(a, i, len(a))
 	}
 }
 
-func maxHeapModify(a []int, index int) {
+func maxHeapModify(a []int, index int, length int) {
 	left := left(index)
 	right := right(index)
 	largest := index
-	if a[left-1] > a[largest-1] {
-		swap(a, largest, left)
+	if left <= length && a[left-1] > a[largest-1] {
 		largest = left
 	}
-	if a[right-1] > a[largest-1] && largest != left {
-		swap(a, largest, right)
+	if right <= length && a[right-1] > a[largest-1] {
 		largest = right
 	}
 	if largest != index {
-		maxHeapModify(a, largest)
+		swap(a, index-1, largest-1)
+		maxHeapModify(a, largest, length)
 	}
 }
 
@@ -44,5 +58,5 @@ func right(index int) int {
 }
 
 func swap(a []int, var1 int, var2 int) {
-	a[var1-1], a[var2-1] = a[var2-1], a[var1-1]
+	a[var1], a[var2] = a[var2], a[var1]
 }
