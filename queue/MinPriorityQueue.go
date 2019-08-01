@@ -3,6 +3,7 @@ package queue
 import (
 	"fmt"
 	. "github.com/truongnhukhang/hellogo/heap"
+	"math"
 	"strconv"
 )
 
@@ -11,22 +12,25 @@ type MinPriorityQueue struct {
 }
 
 func (q *MinPriorityQueue) Put(e int) {
-	q.DB = append(q.DB, e)
+	q.DB = append([]int{e}, q.DB...)
 	if len(q.DB) > 1 {
-		ToMinHeap(q.DB)
+		MinHeapBuild(q.DB, 1, len(q.DB))
 	}
 }
 
 func (q *MinPriorityQueue) Poll() int {
-	var e = q.DB[0]
-	q.DB = append(q.DB[:0], q.DB[1:]...)
-	if len(q.DB) > 1 {
-		MinHeapBuild(q.DB, 1, len(q.DB))
+	if len(q.DB) > 0 {
+		var e = q.DB[0]
+		q.DB = append(q.DB[:0], q.DB[1:]...)
+		if len(q.DB) > 1 {
+			MinHeapBuild(q.DB, 1, len(q.DB))
+		}
+		return e
 	}
-	return e
+	return math.MinInt32
 }
 
-func (q *MinPriorityQueue) Min() int {
+func (q *MinPriorityQueue) Peek() int {
 	var e = q.DB[0]
 	return e
 }

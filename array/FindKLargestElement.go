@@ -27,10 +27,10 @@ func findKLargestElement(a []int, k int) int {
 		count++
 	}
 	for i := count; i < len(a); i++ {
-		if a[i] > minQueue.Min() {
+		if a[i] > minQueue.Peek() {
 			minQueue.Poll()
 			minQueue.Put(a[i])
 		}
 	}
-	return minQueue.Min()
+	return minQueue.Peek()
 }
