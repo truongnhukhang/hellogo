@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	var a = [][]int{{1, 3, 9}, {2, 6, 10}, {4, 7, 8}, {5, 9, 11}}
+	var a = [][]int{{1, 3, 9, 12}, {2, 6, 10, 14, 15}, {4, 7, 8, 13}, {5, 9, 11}}
 	var result = mergeKSortedList(a)
 	for i := 0; i < len(result); i++ {
 		fmt.Println(result[i])
@@ -16,8 +16,8 @@ func main() {
 /**
 merge K Sorted List
 Example :
-input = {1, 3, 9}, {2, 6, 10}, {4, 7, 8}, {5, 9, 11}
-output = {1,2,3,4,5,6,7,8,9,9,10,11}
+input = {1, 3, 9, 12}, {2, 6, 10,14,15}, {4, 7, 8,13}, {5, 9, 11}
+output = {1,2,3,4,5,6,7,8,9,9,10,11,12,13,14,15}
 **/
 func mergeKSortedList(a [][]int) []int {
 	listNumberArray := len(a)
