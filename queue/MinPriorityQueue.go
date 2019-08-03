@@ -30,6 +30,10 @@ func (q *MinPriorityQueue) Poll() int {
 	return math.MinInt32
 }
 
+func (q *MinPriorityQueue) IsEmpty() bool {
+	return len(q.DB) == 0
+}
+
 func (q *MinPriorityQueue) Peek() int {
 	var e = q.DB[0]
 	return e
