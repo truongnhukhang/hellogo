@@ -31,24 +31,15 @@ type HuffmanCoding struct {
 func (hc *HuffmanCoding) CompressData() string {
 	wordMap := map[uint8]*WordNode{}
 	data := hc.Context
-	for i := 0; i < len(data); i++ {
-		if wordMap[data[i]] == nil {
-			tempWord := WordNode{
-				value: string(data[i]), weight: 1, left: nil, right: nil,
-			}
-			wordMap[data[i]] = &tempWord
-		} else {
-			tempWord := wordMap[data[i]]
-			tempWord.weight = tempWord.weight + 1
-		}
-	}
+	createCharCountMap(data, &wordMap)
 	wordNodeList := []object.Object{}
+	// put all WordNode to the PriorityQueue
 	wordNodeQueue := queue.PriorityQueue{wordNodeList}
 	for _, v := range wordMap {
 		teamNode := v
 		wordNodeQueue.Put(teamNode)
 	}
-	wordNodeQueue.Print()
+	// start buff Huffman Tree
 	for wordNodeQueue.Size() > 1 {
 		left := wordNodeQueue.Poll()
 		right := wordNodeQueue.Poll()
@@ -67,6 +58,20 @@ func (hc *HuffmanCoding) CompressData() string {
 		result = result + wordMap[data[i]].hash
 	}
 	return result
+}
+
+func createCharCountMap(data string, wordMap *map[uint8]*WordNode) {
+	for i := 0; i < len(data); i++ {
+		if (*wordMap)[data[i]] == nil {
+			tempWord := WordNode{
+				value: string(data[i]), weight: 1, left: nil, right: nil,
+			}
+			(*wordMap)[data[i]] = &tempWord
+		} else {
+			tempWord := (*wordMap)[data[i]]
+			tempWord.weight = tempWord.weight + 1
+		}
+	}
 }
 
 func (hc *HuffmanCoding) UncompressData(hashData string) string {
