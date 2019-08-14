@@ -15,7 +15,7 @@ func main() {
 	}
 }
 
-func sort(a []int) {
+func heapSort(a []int) {
 	ToMaxHeap(a)
 	var length = len(a)
 	for i := length; i > 1; i-- {
