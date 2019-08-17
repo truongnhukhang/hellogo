@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"github.com/truongnhukhang/hellogo/greedy"
+	"github.com/truongnhukhang/hellogo/tree"
 )
 
 func main() {
@@ -23,10 +22,26 @@ func main() {
 	//queue.IncreaseKey(4, 4)
 	//fmt.Println("")
 	//queue.Print()
-	text := "khangggh"
-	hc := greedy.HuffmanCoding{}
-	hc.Context = text
-	compressData := hc.CompressData()
-	fmt.Println(compressData)
-	fmt.Println(hc.UncompressData(compressData))
+	//text := "khangggh"
+	//hc := greedy.HuffmanCoding{}
+	//hc.Context = text
+	//compressData := hc.CompressData()
+	//fmt.Println(compressData)
+	//fmt.Println(hc.UncompressData(compressData))
+	bstTree := tree.BSTTree{}
+	bstTree.Insert(8)
+	bstTree.Insert(5)
+	bstTree.Insert(12)
+	bstTree.Insert(4)
+	bstTree.Insert(6)
+	bstTree.Insert(10)
+	bstTree.Insert(14)
+	bstTree.Insert(9)
+	bstTree.Insert(11)
+	bstTree.Insert(13)
+	bstTree.Insert(15)
+	bstTree.PreOrderPrint()
+	node := bstTree.Search(12)
+	bstTree.Delete(node)
+	bstTree.PreOrderPrint()
 }
