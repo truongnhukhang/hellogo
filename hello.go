@@ -28,7 +28,7 @@ func main() {
 	//compressData := hc.CompressData()
 	//fmt.Println(compressData)
 	//fmt.Println(hc.UncompressData(compressData))
-	bstTree := tree.BSTTree{}
+	bstTree := tree.BSTree{}
 	bstTree.Insert(8)
 	bstTree.Insert(5)
 	bstTree.Insert(12)

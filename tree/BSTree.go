@@ -4,11 +4,11 @@ import (
 	"fmt"
 )
 
-type BSTTree struct {
+type BSTree struct {
 	root *Node
 }
 
-func (t *BSTTree) Insert(e interface{}) {
+func (t *BSTree) Insert(e interface{}) {
 	if t.root == nil {
 		t.root = &Node{}
 		t.root.Value = e
@@ -36,7 +36,7 @@ func (t *BSTTree) Insert(e interface{}) {
 	}
 }
 
-func (t *BSTTree) insertToNode(node *Node, e interface{}) {
+func (t *BSTree) insertToNode(node *Node, e interface{}) {
 	objectValue := node.Value.(int)
 	if objectValue > e.(int) {
 		if node.Left != nil {
@@ -60,7 +60,7 @@ func (t *BSTTree) insertToNode(node *Node, e interface{}) {
 
 }
 
-func (t *BSTTree) PreOrderPrint() {
+func (t *BSTree) PreOrderPrint() {
 	if t.root.Left != nil {
 		t.preOrderPrintFromNode(t.root.Left)
 	}
@@ -70,7 +70,7 @@ func (t *BSTTree) PreOrderPrint() {
 	}
 }
 
-func (t *BSTTree) preOrderPrintFromNode(node *Node) {
+func (t *BSTree) preOrderPrintFromNode(node *Node) {
 	if node.Left != nil {
 		t.preOrderPrintFromNode(node.Left)
 	}
@@ -80,7 +80,7 @@ func (t *BSTTree) preOrderPrintFromNode(node *Node) {
 	}
 }
 
-func (t *BSTTree) Search(e interface{}) *Node {
+func (t *BSTree) Search(e interface{}) *Node {
 	if e.(int) == t.root.Value.(int) {
 		return t.root
 	} else if e.(int) < t.root.Value.(int) {
@@ -90,7 +90,7 @@ func (t *BSTTree) Search(e interface{}) *Node {
 	}
 }
 
-func (t *BSTTree) searchInSubtree(e interface{}, root *Node) *Node {
+func (t *BSTree) searchInSubtree(e interface{}, root *Node) *Node {
 	if root == nil {
 		return nil
 	}
@@ -103,18 +103,18 @@ func (t *BSTTree) searchInSubtree(e interface{}, root *Node) *Node {
 	}
 }
 
-func (t *BSTTree) findInOrderSuccessor(node *Node) *Node {
+func (t *BSTree) findInOrderSuccessor(node *Node) *Node {
 	return t.findMinimumSubTree(node)
 }
 
-func (t *BSTTree) findMinimumSubTree(node *Node) *Node {
+func (t *BSTree) findMinimumSubTree(node *Node) *Node {
 	if node.Left != nil {
 		return t.findMinimumSubTree(node.Left)
 	}
 	return node
 }
 
-func (t *BSTTree) Delete(e *Node) {
+func (t *BSTree) Delete(e *Node) {
 	if e.Left == nil && e.Right == nil {
 		e = nil
 	} else if e.Left != nil && e.Right == nil {
