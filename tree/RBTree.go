@@ -54,6 +54,48 @@ func (t *RBTree) insertFixup(node *Node) {
 	}
 }
 
+func (t *RBTree) leftRotate(node *Node) {
+	if node.Right != nil {
+		right := node.Right
+		node.Right = right.Left
+		right.Left = node
+		parent := node.Parent
+		if parent == nil {
+			t.root = right
+			right.Parent = nil
+		} else {
+			if parent.Left == node {
+				parent.Left = right
+			} else {
+				parent.Right = right
+			}
+			node.Parent = right
+			right.Parent = parent
+		}
+	}
+}
+
+func (t *RBTree) rightRotate(node *Node) {
+	if node.Left != nil {
+		left := node.Left
+		node.Left = left.Right
+		left.Right = node
+		parent := node.Parent
+		if parent == nil {
+			t.root = left
+			left.Parent = nil
+		} else {
+			if parent.Left == node {
+				parent.Left = left
+			} else {
+				parent.Right = left
+			}
+			node.Parent = left
+			left.Parent = parent
+		}
+	}
+}
+
 func (t *RBTree) insertToNode(node *Node, e interface{}) {
 	objectValue := node.Value.(int)
 	if objectValue > e.(int) {
