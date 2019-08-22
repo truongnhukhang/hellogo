@@ -47,8 +47,28 @@ func (t *RBTree) insertFixup(node *Node) {
 				node = node.Parent.Parent
 			} else {
 				if node == node.Parent.Right {
-
+					node = node.Parent
+					t.leftRotate(node)
 				}
+				node.Parent.Color = "b"
+				node.Parent.Parent.Color = "r"
+				t.rightRotate(node.Parent.Parent)
+			}
+		} else {
+			uncle := node.Parent.Left
+			if uncle.Color == "r" {
+				node.Parent.Color = "b"
+				uncle.Color = "b"
+				node.Parent.Parent.Color = "r"
+				node = node.Parent.Parent
+			} else {
+				if node == node.Parent.Left {
+					node = node.Parent
+					t.rightRotate(node)
+				}
+				node.Parent.Color = "b"
+				node.Parent.Parent.Color = "r"
+				t.leftRotate(node.Parent.Parent)
 			}
 		}
 	}
