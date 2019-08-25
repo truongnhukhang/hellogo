@@ -1,10 +1,16 @@
 package tree
 
+import (
+	"fmt"
+	"github.com/truongnhukhang/hellogo/queue"
+	"strconv"
+)
+
 type RBTree struct {
 	root *Node
 }
 
-func (t *RBTree) insert(e interface{}) {
+func (t *RBTree) Insert(e interface{}) {
 	if t.root == nil {
 		t.root = &Node{}
 		t.root.Value = e
@@ -19,7 +25,7 @@ func (t *RBTree) insert(e interface{}) {
 				newNode.Color = "r"
 				t.root.Left = &newNode
 			} else {
-				t.insertToNode(t.root.Left, e)
+				t.insertFixup(t.insertToNode(t.root.Left, e))
 			}
 		} else {
 			if t.root.Right == nil {
@@ -29,18 +35,19 @@ func (t *RBTree) insert(e interface{}) {
 				newNode.Color = "r"
 				t.root.Right = &newNode
 			} else {
-				t.insertToNode(t.root.Right, e)
+				t.insertFixup(t.insertToNode(t.root.Right, e))
 			}
 		}
 
 	}
+
 }
 
 func (t *RBTree) insertFixup(node *Node) {
-	for node.Parent.Color == "r" {
+	for node != t.root && node.Parent.Color == "r" {
 		if node.Parent == node.Parent.Parent.Left {
-			uncle := node.Parent.Right
-			if uncle.Color == "r" {
+			uncle := node.Parent.Parent.Right
+			if uncle != nil && uncle.Color == "r" {
 				node.Parent.Color = "b"
 				uncle.Color = "b"
 				node.Parent.Parent.Color = "r"
@@ -55,8 +62,8 @@ func (t *RBTree) insertFixup(node *Node) {
 				t.rightRotate(node.Parent.Parent)
 			}
 		} else {
-			uncle := node.Parent.Left
-			if uncle.Color == "r" {
+			uncle := node.Parent.Parent.Left
+			if uncle != nil && uncle.Color == "r" {
 				node.Parent.Color = "b"
 				uncle.Color = "b"
 				node.Parent.Parent.Color = "r"
@@ -71,6 +78,7 @@ func (t *RBTree) insertFixup(node *Node) {
 				t.leftRotate(node.Parent.Parent)
 			}
 		}
+		t.root.Color = "b"
 	}
 }
 
@@ -116,27 +124,66 @@ func (t *RBTree) rightRotate(node *Node) {
 	}
 }
 
-func (t *RBTree) insertToNode(node *Node, e interface{}) {
+func (t *RBTree) LevelOrderPrint() {
+	fmt.Println("************************")
+	simpleQueue := queue.SimpleQueue{[]interface{}{}}
+	simpleQueue.Put(t.root)
+	var tempNode *Node = nil
+	for !simpleQueue.IsEmpty() {
+		tempNode = simpleQueue.Poll().(*Node)
+		fmt.Println(strconv.Itoa(tempNode.Value.(int)) + " - " + tempNode.Color)
+		if tempNode.Left != nil {
+			simpleQueue.Put(tempNode.Left)
+		}
+		if tempNode.Right != nil {
+			simpleQueue.Put(tempNode.Right)
+		}
+	}
+}
+
+func (t *RBTree) PreOrderPrint() {
+	if t.root.Left != nil {
+		t.preOrderPrintFromNode(t.root.Left)
+	}
+	fmt.Println(t.root.Value)
+	if t.root.Right != nil {
+		t.preOrderPrintFromNode(t.root.Right)
+	}
+}
+
+func (t *RBTree) preOrderPrintFromNode(node *Node) {
+	if node.Left != nil {
+		t.preOrderPrintFromNode(node.Left)
+	}
+	fmt.Println(node.Value)
+	if node.Right != nil {
+		t.preOrderPrintFromNode(node.Right)
+	}
+}
+
+func (t *RBTree) insertToNode(node *Node, e interface{}) *Node {
 	objectValue := node.Value.(int)
 	if objectValue > e.(int) {
 		if node.Left != nil {
-			t.insertToNode(node.Left, e)
+			return t.insertToNode(node.Left, e)
 		} else {
 			newNode := Node{}
 			newNode.Parent = node
 			newNode.Value = e
 			newNode.Color = "r"
 			node.Left = &newNode
+			return &newNode
 		}
 	} else {
 		if node.Right != nil {
-			t.insertToNode(node.Right, e)
+			return t.insertToNode(node.Right, e)
 		} else {
 			newNode := Node{}
 			newNode.Parent = node
 			newNode.Value = e
 			newNode.Color = "r"
 			node.Right = &newNode
+			return &newNode
 		}
 	}
 
