@@ -17,17 +17,22 @@ func main() {
 	price[7] = 20
 	price[8] = 24
 	price[9] = 30
-	fmt.Println(findMaxProfit(4, price))
+	maxProfitMap := map[int]int{}
+	fmt.Println(findMaxProfit(10, price, maxProfitMap))
 }
 
-func findMaxProfit(rodLength int, price []int) int {
+func findMaxProfit(rodLength int, price []int, maxProfitMap map[int]int) int {
+	if maxProfitMap[rodLength] != 0 {
+		return maxProfitMap[rodLength]
+	}
 	if rodLength < 0 {
 		return 0
 	}
 	max := price[rodLength-1]
 	for i := 1; i < rodLength; i++ {
-		tempMax := price[i-1] + findMaxProfit(rodLength-i, price)
+		tempMax := price[i-1] + findMaxProfit(rodLength-i, price, maxProfitMap)
 		max = int(math.Max(float64(max), float64(tempMax)))
 	}
+	maxProfitMap[rodLength] = max
 	return max
 }
