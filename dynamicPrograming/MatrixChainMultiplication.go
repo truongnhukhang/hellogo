@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	matrixs := []int{10, 100, 5, 50}
+	matrixs := []int{10, 100, 5, 50, 25}
 	fmt.Println(findMinMatrixChain(matrixs))
 }
 
