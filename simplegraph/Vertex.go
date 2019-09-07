@@ -1,7 +1,9 @@
 package simplegraph
 
 type Vertex struct {
-	Color string
-	Value string
-	Index int
+	Color    string
+	Value    string
+	Distance int
+	Index    int
+	Parent   *Vertex
 }

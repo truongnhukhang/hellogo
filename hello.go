@@ -49,14 +49,20 @@ func main() {
 	//testTree.LevelOrderPrint()
 	//testTree.Insert(15)
 	//testTree.LevelOrderPrint()
-	graph := simplegraph.SimpleGraph{NumVertex: 3}
+	graph := simplegraph.SimpleGraph{NumVertex: 4}
 	graph.Init()
 	a := graph.AddVertex("a")
 	b := graph.AddVertex("b")
 	c := graph.AddVertex("c")
+	d := graph.AddVertex("d")
 	graph.AddEdge(*a, *b, 1)
 	graph.AddEdge(*b, *a, 1)
+	graph.AddEdge(*b, *d, 1)
+	graph.AddEdge(*d, *b, 1)
 	graph.AddEdge(*a, *c, 1)
 	graph.AddEdge(*c, *a, 1)
 	graph.PrintGraph()
+	graph.BreathFirstSearch(b)
+	graph.PrintGraph()
+
 }
