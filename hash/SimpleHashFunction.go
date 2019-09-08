@@ -1,8 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
+	fmt.Println("****testHashByDivision**")
+	testHashByDivision()
+	fmt.Println("****testByMultiplication**")
+	testByMultiplication()
+}
+func testHashByDivision() {
 	tablesize := 15
 	var primeNumber = findNearestPrime(tablesize)
 	fmt.Println(hashByDivisionMethod("test", primeNumber))
@@ -19,7 +28,22 @@ func main() {
 	fmt.Println(hashByDivisionMethod("te124sfst", primeNumber))
 	fmt.Println(hashByDivisionMethod("tsaesfst", primeNumber))
 }
-
+func testByMultiplication() {
+	tablesize := 15
+	fmt.Println(hashByMultiplicationMethod("test", tablesize))
+	fmt.Println(hashByMultiplicationMethod("test2", tablesize))
+	fmt.Println(hashByMultiplicationMethod("1test", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tafest", tablesize))
+	fmt.Println(hashByMultiplicationMethod("te4st", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tesfst", tablesize))
+	fmt.Println(hashByMultiplicationMethod("raaf", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tesqwrfst", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tesfst", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tesfsast", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tesaafst", tablesize))
+	fmt.Println(hashByMultiplicationMethod("te124sfst", tablesize))
+	fmt.Println(hashByMultiplicationMethod("tsaesfst", tablesize))
+}
 func hashByDivisionMethod(key string, primeNumber int) int32 {
 	keyChars := []rune(key)
 	var keyChar int32
@@ -29,6 +53,17 @@ func hashByDivisionMethod(key string, primeNumber int) int32 {
 		hash = (hash + keyChar) % int32(primeNumber)
 	}
 	return hash
+}
+
+func hashByMultiplicationMethod(key string, tableSize int) int32 {
+	keyChars := []rune(key)
+	var keyChar int32
+	constantA := 0.618
+	for i := 0; i < len(keyChars); i++ {
+		keyChar = keyChar + keyChars[i] + keyChar%11
+	}
+	hashResult := float64(tableSize) * math.Mod(float64(keyChar)*constantA, 1)
+	return int32(math.Floor(hashResult))
 }
 
 func findNearestPrime(number int) int {
