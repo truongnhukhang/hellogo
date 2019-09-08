@@ -4,29 +4,29 @@ import "fmt"
 
 func main() {
 	tablesize := 15
-	fmt.Println(hashByDivisionMethod("test", tablesize))
-	fmt.Println(hashByDivisionMethod("test2", tablesize))
-	fmt.Println(hashByDivisionMethod("1test", tablesize))
-	fmt.Println(hashByDivisionMethod("tafest", tablesize))
-	fmt.Println(hashByDivisionMethod("te4st", tablesize))
-	fmt.Println(hashByDivisionMethod("tesfst", tablesize))
-	fmt.Println(hashByDivisionMethod("raaf", tablesize))
-	fmt.Println(hashByDivisionMethod("tesqwrfst", tablesize))
-	fmt.Println(hashByDivisionMethod("tesfst", tablesize))
-	fmt.Println(hashByDivisionMethod("tesfsast", tablesize))
-	fmt.Println(hashByDivisionMethod("tesaafst", tablesize))
-	fmt.Println(hashByDivisionMethod("te124sfst", tablesize))
-	fmt.Println(hashByDivisionMethod("tsaesfst", tablesize))
+	var primeNumber = findNearestPrime(tablesize)
+	fmt.Println(hashByDivisionMethod("test", primeNumber))
+	fmt.Println(hashByDivisionMethod("test2", primeNumber))
+	fmt.Println(hashByDivisionMethod("1test", primeNumber))
+	fmt.Println(hashByDivisionMethod("tafest", primeNumber))
+	fmt.Println(hashByDivisionMethod("te4st", primeNumber))
+	fmt.Println(hashByDivisionMethod("tesfst", primeNumber))
+	fmt.Println(hashByDivisionMethod("raaf", primeNumber))
+	fmt.Println(hashByDivisionMethod("tesqwrfst", primeNumber))
+	fmt.Println(hashByDivisionMethod("tesfst", primeNumber))
+	fmt.Println(hashByDivisionMethod("tesfsast", primeNumber))
+	fmt.Println(hashByDivisionMethod("tesaafst", primeNumber))
+	fmt.Println(hashByDivisionMethod("te124sfst", primeNumber))
+	fmt.Println(hashByDivisionMethod("tsaesfst", primeNumber))
 }
 
-func hashByDivisionMethod(key string, tableSize int) int32 {
+func hashByDivisionMethod(key string, primeNumber int) int32 {
 	keyChars := []rune(key)
 	var keyChar int32
 	var hash int32
-	var primeNumber = findNearestPrime(tableSize)
 	for i := 0; i < len(keyChars); i++ {
 		keyChar = keyChars[i]
-		hash = (31*hash + keyChar) % int32(primeNumber)
+		hash = (hash + keyChar) % int32(primeNumber)
 	}
 	return hash
 }
