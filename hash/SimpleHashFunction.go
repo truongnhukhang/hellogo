@@ -60,7 +60,7 @@ func hashByMultiplicationMethod(key string, tableSize int) int32 {
 	var keyChar int32
 	constantA := 0.618
 	for i := 0; i < len(keyChars); i++ {
-		// try to make key become different
+		// try to make hashcode become different
 		keyChar = keyChar + keyChars[i] + keyChar%11
 	}
 	hashResult := float64(tableSize) * math.Mod(float64(keyChar)*constantA, 1)
