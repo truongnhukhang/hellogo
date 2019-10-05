@@ -59,6 +59,55 @@ func (g *SimpleGraph) PrintGraph() {
 
 }
 
+func (g *SimpleGraph) PrintDFSGraph() {
+	for i := 0; i < len(g.vertices); i++ {
+		fmt.Print(" " + g.vertices[i].Value + "-" + g.vertices[i].Color + "-" + strconv.Itoa(g.vertices[i].discoveredTime) + "/" + strconv.Itoa(g.vertices[i].finishedTime))
+	}
+	fmt.Println("")
+	fmt.Println("*******")
+	fmt.Print(" ")
+	for i := 0; i < len(g.vertices); i++ {
+		fmt.Print(" " + g.vertices[i].Value)
+	}
+	fmt.Println("")
+	for i := 0; i < len(g.vertices); i++ {
+		fmt.Print(g.vertices[i].Value + " ")
+		for j := 0; j < len(g.edges[i]); j++ {
+			fmt.Print(strconv.Itoa(g.edges[i][j].value) + " ")
+		}
+		fmt.Println("")
+	}
+
+}
+
+func (g *SimpleGraph) DepthFirstSearch() {
+	for i, _ := range g.vertices {
+		g.vertices[i].Color = "white"
+		g.vertices[i].Parent = nil
+	}
+	time := 0
+	for _, v := range g.vertices {
+		if v.Color == "white" {
+			g.DepthFirstSearch_Visit(v, &time)
+		}
+	}
+}
+
+func (g *SimpleGraph) DepthFirstSearch_Visit(v *Vertex, time *int) {
+	*time = *time + 1
+	v.discoveredTime = *time
+	v.Color = "gray"
+	for i, u := range g.edges[v.Index] {
+		if u.value == 1 && g.vertices[i].Color == "white" {
+			g.vertices[i].Parent = v
+			g.DepthFirstSearch_Visit(g.vertices[i], time)
+		}
+	}
+	*time = *time + 1
+	v.Color = "black"
+	v.finishedTime = *time
+}
+
 func (g *SimpleGraph) BreathFirstSearch(vertex *Vertex) {
 
 	for i, _ := range g.vertices {

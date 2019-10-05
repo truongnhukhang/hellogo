@@ -62,7 +62,7 @@ func main() {
 	graph.AddEdge(*a, *c, 1)
 	graph.AddEdge(*c, *a, 1)
 	graph.PrintGraph()
-	graph.BreathFirstSearch(b)
-	graph.PrintGraph()
+	graph.DepthFirstSearch()
+	graph.PrintDFSGraph()
 
 }
