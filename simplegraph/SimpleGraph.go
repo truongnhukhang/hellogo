@@ -1,6 +1,7 @@
 package simplegraph
 
 import (
+	"container/list"
 	"fmt"
 	queue2 "github.com/truongnhukhang/hellogo/queue"
 	"math"
@@ -78,6 +79,39 @@ func (g *SimpleGraph) PrintDFSGraph() {
 		fmt.Println("")
 	}
 
+}
+
+func (g *SimpleGraph) StrongConnectedComponent() list.List {
+
+}
+
+func (g *SimpleGraph) TopologicalSort(sortList *list.List) {
+	for i, _ := range g.vertices {
+		g.vertices[i].Color = "white"
+		g.vertices[i].Parent = nil
+	}
+	time := 0
+	for _, v := range g.vertices {
+		if v.Color == "white" {
+			g.DepthFirstSearch_Visit(v, &time)
+		}
+	}
+}
+
+func (g *SimpleGraph) TopologicalSort_Visit(v *Vertex, time *int, sortList *list.List) {
+	*time = *time + 1
+	v.discoveredTime = *time
+	sortList.PushBack(v)
+	v.Color = "gray"
+	for i, u := range g.edges[v.Index] {
+		if u.value == 1 && g.vertices[i].Color == "white" {
+			g.vertices[i].Parent = v
+			g.DepthFirstSearch_Visit(g.vertices[i], time)
+		}
+	}
+	*time = *time + 1
+	v.Color = "black"
+	v.finishedTime = *time
 }
 
 func (g *SimpleGraph) DepthFirstSearch() {
