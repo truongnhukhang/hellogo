@@ -1,6 +1,10 @@
 package main
 
-import "github.com/truongnhukhang/hellogo/simplegraph"
+import (
+	"container/list"
+	"fmt"
+	"github.com/truongnhukhang/hellogo/simplegraph"
+)
 
 func main() {
 	//var a []int
@@ -56,12 +60,33 @@ func main() {
 	b := graph.AddVertex("b")
 	c := graph.AddVertex("c")
 	d := graph.AddVertex("d")
+	e := graph.AddVertex("e")
 	graph.AddEdge(a, b, 1)
-	graph.AddEdge(b, a, 1)
-	graph.AddEdge(b, d, 1)
-	graph.AddEdge(d, b, 1)
-	graph.AddEdge(a, c, 1)
+	graph.AddEdge(b, c, 1)
 	graph.AddEdge(c, a, 1)
+	graph.AddEdge(b, d, 1)
+	graph.AddEdge(d, e, 1)
+	graph.AddEdge(e, d, 1)
+	//sortResult := graph.TopologicalSort()
+	//fmt.Println("sort result")
+	//temp := sortResult.Front();
+	//for temp!=nil {
+	//	value := temp.Value.(*simplegraph.Vertex);
+	//	fmt.Print(" "+value.Value);
+	//	temp=temp.Next();
+	//}
+	strongComponent := graph.FindStrongConnectComponent()
+	root := strongComponent.Front()
+	for root != nil {
+		temp := root.Value.(*list.List).Front()
+		for temp != nil {
+			value := temp.Value.(*simplegraph.Vertex)
+			fmt.Print(" " + value.Value)
+			temp = temp.Next()
+		}
+		fmt.Println("")
+		root = root.Next()
+	}
 	graph.PrintGraph()
-
+	graph.ReverseGraph().PrintGraph()
 }
