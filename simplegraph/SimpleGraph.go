@@ -81,10 +81,6 @@ func (g *SimpleGraph) PrintDFSGraph() {
 
 }
 
-func (g *SimpleGraph) StrongConnectedComponent() list.List {
-
-}
-
 func (g *SimpleGraph) TopologicalSort(sortList *list.List) {
 	for i, _ := range g.vertices {
 		g.vertices[i].Color = "white"
@@ -101,7 +97,6 @@ func (g *SimpleGraph) TopologicalSort(sortList *list.List) {
 func (g *SimpleGraph) TopologicalSort_Visit(v *Vertex, time *int, sortList *list.List) {
 	*time = *time + 1
 	v.discoveredTime = *time
-	sortList.PushBack(v)
 	v.Color = "gray"
 	for i, u := range g.edges[v.Index] {
 		if u.value == 1 && g.vertices[i].Color == "white" {
@@ -110,6 +105,7 @@ func (g *SimpleGraph) TopologicalSort_Visit(v *Vertex, time *int, sortList *list
 		}
 	}
 	*time = *time + 1
+	sortList.PushBack(v)
 	v.Color = "black"
 	v.finishedTime = *time
 }
