@@ -1,7 +1,7 @@
 package disjointSet
 
 type Set struct {
-	key            interface{}
-	representative *Set
-	rank           int
+	Key            interface{}
+	Representative *Set
+	Rank           int
 }
