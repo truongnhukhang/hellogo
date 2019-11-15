@@ -10,10 +10,12 @@ type SimpleGraphL struct {
 	vertices         *list.List
 	verticesValueMap *map[string]*Vertex
 	edges            *map[*Vertex]*list.List
+	edgesWeight      *list.List
 }
 
 func (g *SimpleGraphL) init() *SimpleGraphL {
 	g.vertices = list.New()
+	g.edgesWeight = list.New()
 	g.edges = &map[*Vertex]*list.List{}
 	g.verticesValueMap = &map[string]*Vertex{}
 	return g
@@ -30,7 +32,12 @@ func (g *SimpleGraphL) AddVertex(value string) *Vertex {
 	return &vertex
 }
 
-func (g *SimpleGraphL) AddEdge(source *Vertex, desc *Vertex, weight int) {
+func (g *SimpleGraphL) AddEdgeAndWeight(source *Vertex, desc *Vertex, weight int) {
+	tempList := g.edgesWeight
+	tempList.PushBack(&Edge{Weight: weight, Source: source, Desc: desc})
+}
+
+func (g *SimpleGraphL) AddEdge(source *Vertex, desc *Vertex) {
 	tempList := (*g.edges)[source]
 	if tempList == nil {
 		tempList = list.New()
@@ -91,7 +98,7 @@ func (g *SimpleGraphL) ReverseGraph() *SimpleGraphL {
 	for key, value := range *g.edges {
 		tempNode := value.Front()
 		for tempNode != nil {
-			reverseGraph.AddEdge(tempNode.Value.(*Vertex), key, 1)
+			reverseGraph.AddEdge(tempNode.Value.(*Vertex), key)
 			tempNode = tempNode.Next()
 		}
 	}
