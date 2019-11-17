@@ -39,11 +39,11 @@ func (q *MinPriorityQueue) Peek() int {
 	return e
 }
 
-func (q *MinPriorityQueue) IncreaseKey(index int, value int) {
+func (q *MinPriorityQueue) DecreaseKey(index int, value int) {
 	q.DB[index-1] = value
 	parent := index / 2
 	for parent != 0 {
-		if q.DB[parent-1] < q.DB[index-1] {
+		if q.DB[parent-1] > q.DB[index-1] {
 			q.DB[parent-1], q.DB[index-1] = q.DB[index-1], q.DB[parent-1]
 			index = parent
 		}
