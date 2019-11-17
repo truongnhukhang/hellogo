@@ -6,7 +6,7 @@ type Edge struct {
 	Weight int
 	value  int
 	Source *Vertex
-	Desc   *Vertex
+	Des    *Vertex
 }
 
 func (e *Edge) CompareWith(edge interface{}) int {
@@ -14,5 +14,5 @@ func (e *Edge) CompareWith(edge interface{}) int {
 }
 
 func (e *Edge) String() string {
-	return e.Source.Value + "---" + e.Desc.Value + " : " + strconv.Itoa(e.Weight)
+	return e.Source.Value + "---" + e.Des.Value + " : " + strconv.Itoa(e.Weight)
 }

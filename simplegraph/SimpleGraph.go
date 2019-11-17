@@ -84,7 +84,7 @@ func (g *SimpleGraph) PrintDFSGraph() {
 func (g *SimpleGraph) TopologicalSort(sortList *list.List) {
 	for i, _ := range g.vertices {
 		g.vertices[i].Color = "white"
-		g.vertices[i].Parent = nil
+		g.vertices[i].Predecessors = nil
 	}
 	time := 0
 	for _, v := range g.vertices {
@@ -100,7 +100,7 @@ func (g *SimpleGraph) TopologicalSort_Visit(v *Vertex, time *int, sortList *list
 	v.Color = "gray"
 	for i, u := range g.edges[v.Index] {
 		if u.value == 1 && g.vertices[i].Color == "white" {
-			g.vertices[i].Parent = v
+			g.vertices[i].Predecessors = v
 			g.DepthFirstSearch_Visit(g.vertices[i], time)
 		}
 	}
@@ -113,7 +113,7 @@ func (g *SimpleGraph) TopologicalSort_Visit(v *Vertex, time *int, sortList *list
 func (g *SimpleGraph) DepthFirstSearch() {
 	for i, _ := range g.vertices {
 		g.vertices[i].Color = "white"
-		g.vertices[i].Parent = nil
+		g.vertices[i].Predecessors = nil
 	}
 	time := 0
 	for _, v := range g.vertices {
@@ -129,7 +129,7 @@ func (g *SimpleGraph) DepthFirstSearch_Visit(v *Vertex, time *int) {
 	v.Color = "gray"
 	for i, u := range g.edges[v.Index] {
 		if u.value == 1 && g.vertices[i].Color == "white" {
-			g.vertices[i].Parent = v
+			g.vertices[i].Predecessors = v
 			g.DepthFirstSearch_Visit(g.vertices[i], time)
 		}
 	}
@@ -146,14 +146,14 @@ func (g *SimpleGraph) BreathFirstSearch(vertex *Vertex) {
 	}
 	vertex.Color = "black"
 	vertex.Distance = 0
-	vertex.Parent = nil
+	vertex.Predecessors = nil
 	queue := queue2.SimpleQueue{}
 	queue.Put(vertex)
 	for !queue.IsEmpty() {
 		e := queue.Poll().(*Vertex)
 		for i, v := range g.edges[e.Index] {
 			if v.value == 1 && g.vertices[i].Color == "white" {
-				g.vertices[i].Parent = e
+				g.vertices[i].Predecessors = e
 				g.vertices[i].Distance = e.Distance + 1
 				queue.Put(g.vertices[i])
 			}

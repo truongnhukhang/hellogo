@@ -21,7 +21,7 @@ func main() {
 	//	fmt.Println(testPoll)
 	//	testPoll = queue.Poll()
 	//}
-	//queue.IncreaseKey(4, 4)
+	//queue.DecreaseKey(4, 4)
 	//fmt.Println("")
 	//queue.Print()
 	//text := "khangggh"

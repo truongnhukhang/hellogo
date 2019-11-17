@@ -10,13 +10,15 @@ type SimpleGraphL struct {
 	vertices         *list.List
 	verticesValueMap *map[string]*Vertex
 	edges            *map[*Vertex]*list.List
-	edgesWeight      *list.List
+	edgesList        *list.List
+	edgesAdj         *map[*Vertex]*list.List
 }
 
 func (g *SimpleGraphL) init() *SimpleGraphL {
 	g.vertices = list.New()
-	g.edgesWeight = list.New()
+	g.edgesList = list.New()
 	g.edges = &map[*Vertex]*list.List{}
+	g.edgesAdj = &map[*Vertex]*list.List{}
 	g.verticesValueMap = &map[string]*Vertex{}
 	return g
 }
@@ -33,8 +35,15 @@ func (g *SimpleGraphL) AddVertex(value string) *Vertex {
 }
 
 func (g *SimpleGraphL) AddEdgeAndWeight(source *Vertex, desc *Vertex, weight int) {
-	tempList := g.edgesWeight
-	tempList.PushBack(&Edge{Weight: weight, Source: source, Desc: desc})
+	tempList := g.edgesList
+	tempList.PushBack(&Edge{Weight: weight, Source: source, Des: desc})
+
+	adjList := (*g.edgesAdj)[source]
+	if adjList == nil {
+		adjList = list.New()
+		(*g.edgesAdj)[source] = adjList
+	}
+	adjList.PushBack(&Edge{Weight: weight, Source: source, Des: desc})
 }
 
 func (g *SimpleGraphL) AddEdge(source *Vertex, desc *Vertex) {

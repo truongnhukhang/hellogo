@@ -16,15 +16,15 @@ func FindMinimumSpanningTree(g *SimpleGraphL) *list.List {
 	for e := vertices.Front(); e != nil; e = e.Next() {
 		disjoint.MakeSet(e.Value)
 	}
-	edges := g.edgesWeight
+	edges := g.edgesList
 	for e := edges.Front(); e != nil; e = e.Next() {
 		priorityQueue.Put(e.Value.(*Edge))
 	}
 	tempEdge := priorityQueue.Poll().(*Edge)
 	for priorityQueue.Size() > 0 {
-		if disjoint.FindSet(tempEdge.Source) != disjoint.FindSet(tempEdge.Desc) {
+		if disjoint.FindSet(tempEdge.Source) != disjoint.FindSet(tempEdge.Des) {
 			result.PushBack(tempEdge)
-			disjoint.Union(tempEdge.Source, tempEdge.Desc)
+			disjoint.Union(tempEdge.Source, tempEdge.Des)
 		}
 		tempEdge = priorityQueue.Poll().(*Edge)
 	}
