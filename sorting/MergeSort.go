@@ -16,11 +16,16 @@ func mergeSort(a []int) []int {
 	if length == 1 {
 		return a
 	}
+	done := make(chan bool)
 	var mid = length / 2
 	var left = a[0:mid]
 	var right = a[mid:length]
-	left = mergeSort(left)
+	go func() {
+		left = mergeSort(left)
+		done <- true
+	}()
 	right = mergeSort(right)
+	<-done
 	return merge2SortedArray(left, right)
 }
 
