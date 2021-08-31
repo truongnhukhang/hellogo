@@ -5,7 +5,7 @@ import (
 	"github.com/truongnhukhang/hellogo/simplegraph"
 )
 
-func main() {
+func spanningTree() {
 	graph := simplegraph.New()
 	a := graph.AddVertex("a")
 	b := graph.AddVertex("b")

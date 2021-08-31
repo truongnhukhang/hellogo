@@ -5,7 +5,7 @@ import (
 	"github.com/truongnhukhang/hellogo/disjointSet"
 )
 
-func main() {
+func disjointSet() {
 	b := "b"
 	c := "c"
 	d := "d"

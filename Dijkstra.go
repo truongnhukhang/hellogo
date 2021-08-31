@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func main() {
+func dijkstra() {
 	graph := simplegraph.New()
 	a := graph.AddVertex("a")
 	b := graph.AddVertex("b")
